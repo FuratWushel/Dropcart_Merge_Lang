@@ -2,15 +2,21 @@
 
 {% block content %}
 
-    <div class="jumbotron">
-        <h1>{{ lang.page_home.lead_title }}</h1>
-        <p class="lead">
-            {{ lang.page_home.lead_text }}
-        </p>
-    </div>
-
-    <div class="row">
-
+    <h1>{{ page_title }}</h1>
+    <p class="lead">
+        {{ lang.page_home.lead_text|raw }}
+    </p>
+    <div class="container">
+        <div class="col-md-6">
+            <p>
+                {{ lang.page_home.left_block }}
+            </p>
+        </div>
+        <div class="col-md-6">
+            <p>
+                {{ lang.page_home.right_block }}
+            </p>
+        </div>
     </div>
 
 {% endblock %}

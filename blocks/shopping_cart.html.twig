@@ -1,6 +1,6 @@
 <h3>
     <a href="{{ lang.url.shopping_cart }}" style="text-decoration: none;">
-        <span class="glyphicon glyphicon-shopping-cart"></span> {{ lang.shopping_cart }}
+        <span class="glyphicon glyphicon-shopping-cart"></span> Winkelwagen
     </a>
 </h3>
 <div class="cart-content">
@@ -8,6 +8,6 @@
         <span class="cart-items">{{ shopping_cart_overview.total_products ~ ' artikel(en)' }}</span>
         - <span class="cart-total">&euro;&nbsp;<span class="cart-total-amount">{{ shopping_cart_overview.total_price|number_format(2, ',', '.') }}</span></span>
     {% else %}
-        <small><i>{{ lang.shopping_cart.no_products }}</i></small>
+        <small><i>Geen producten</i></small>
     {% endif %}
 </div>

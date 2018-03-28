@@ -7,26 +7,26 @@
     <ul class="nav nav-tabs order-tabs">
         <li class="active">
             <a href="javascript:void(0);">
-                <strong>Stap 1 - </strong>
-                Winkelwagen
+                <strong>{{ lang.shopping_cart.steps.step }} 1 - </strong>
+                {{ lang.shopping_cart.steps.step_one }}
             </a>
         </li>
         <li class="{{ shopping_cart|length <= 0 ? 'disabled' : '' }}">
             <a href="{{ shopping_cart|length >= 1 ? lang.url.customer_details : 'javascript:void(0);' }}">
-                <strong>Stap 2 - </strong>
-                Uw gegevens
+                <strong>{{ lang.shopping_cart.steps.step }} 2 - </strong>
+                {{ lang.shopping_cart.steps.step_two }}
             </a>
         </li>
         <li class="{{ transaction is defined ? '' : 'disabled' }}">
             <a href="{{ transaction is defined ? lang.url.checkout : 'javascript:void(0);' }}">
-                <strong>Stap 3 - </strong>
-                Bevestigen en betalen
+                <strong>{{ lang.shopping_cart.steps.step }} 3 - </strong>
+                {{ lang.shopping_cart.steps.step_three }}
             </a>
         </li>
         <li class="disabled">
             <a href="javascript:void(0);">
-                <strong>Stap 4 - </strong>
-                Bestelling geplaatst
+                <strong>{{ lang.shopping_cart.steps.step }} 4 - </strong>
+                {{ lang.shopping_cart.steps.step_four }}
             </a>
         </li>
     </ul>
@@ -35,7 +35,7 @@
 
     {% if transaction is defined and transaction.status == 'CONFIRMED' %}
         <div class="alert alert-warning">
-            De bestelling is al bevestigd. U kunt deze gegevens daarom niet meer aanpassen, maar alleen lezen: <a href="{{ lang.url.checkout }}">klik hier om te betalen</a>.
+            {{ lang.shopping_cart.alerts.change|raw }}
         </div>
     {% endif %}
 
@@ -45,7 +45,7 @@
             <tbody>
             <td>
                 <div class="alert alert-info center">
-                    <h5>Uw winkelwagen is leeg</h5>
+                    <h5>{{ lang.shopping_cart.cart_empty }}</h5>
                 </div>
             </td>
             </tbody>
@@ -53,10 +53,10 @@
             <thead>
             <tr>
                 <th width="10%"></th>
-                <th>Product</th>
-                <th width="14%">Aantal</th>
-                <th width="12%">Stukprijs</th>
-                <th width="12%">Prijs</th>
+                <th>{{ lang.shopping_cart.product.name }}</th>
+                <th width="14%">{{ lang.shopping_cart.product.number }}</th>
+                <th width="12%">{{ lang.shopping_cart.product.unit_price }}</th>
+                <th width="12%">{{ lang.shopping_cart.product.price }}</th>
                 <th class="fold"></th>
             </tr>
             </thead>
@@ -65,8 +65,7 @@
             {% for order_product in shopping_cart %}
                 <tr class="{{ order_product.product.id }}">
                     <td>
-                        <img src="{{ order_product.product.images|length > 0 ? order_product.product.images[0].url : '/img/no_image.gif' }}"
-                             class="fill">
+                        <img src="{{ order_product.product.images|length > 0 ? order_product.product.images[0].url : '/img/no_image.gif' }}" class="fill">
                     </td>
                     <td>
                         <strong><a href="{{ lang.url.product ~ order_product.product.name ~ '/' ~ order_product.product.id }}">{{ order_product.product.name }}</a></strong>
@@ -75,35 +74,35 @@
                         {% if order_product.product.stock is defined and order_product.product.stock > 0 %}
 
                             {% if order_product.quantity > order_product.product.stock %}
-                                <div class="label label-warning">Niet genoeg op voorraad, langere levertijd</div>
+                                <div class="label label-warning">{{ lang.stock.small_stock }}</div>
                             {% else %}
                                 <div class="label label-success">
                                     {% if order_product.product.stock > 10 %}
-                                        <div class="label label-success">Ruimschoots op voorraad</div>
+                                        <div class="label label-success">{{ lang.stock.big_stock }}</div>
                                     {% else %}
-                                        <div class="label label-success">Op voorraad</div>
+                                        <div class="label label-success">{{ lang.stock.in_stock }}</div>
                                     {% endif %}
                                 </div>
                             {% endif %}
 
                             {% if product.shipping_details.shipping_days %}
-                                <div class="label label-info">Levertijd {{ product.shipping_details.shipping_days }}
-                                    werkdag(en)
+                                <div class="label label-info">{{ lang.shipping.time }} {{ product.shipping_details.shipping_days }}
+                                    {{ lang.shipping.days }}
                                 </div>
                             {% else %}
-                                <div class="label label-info">Levertijd 1-3 werkdag(en)</div>
+                                <div class="label label-info">{{ lang.shipping.time_days }}</div>
                             {% endif %}
                         {% else %}
-                            <div class="label label-warning">Dit product is niet op voorraad</div>
+                            <div class="label label-warning">{{ lang.stock.out_of_stock }}</div>
                         {% endif %}
 
                         <table class="product-id-table">
                             <tr>
-                                <th>EAN</th>
+                                <th>{{ lang.product_details.ean }}</th>
                                 <td>{{ order_product.product.ean }}</td>
                             </tr>
                             <tr>
-                                <th>SKU</th>
+                                <th>{{ lang.product_details.sku }}</th>
                                 <td>{{ order_product.product.sku }}</td>
                             </tr>
                         </table>
@@ -139,11 +138,11 @@
                 <td colspan="4" align="right">
                     <div class="next-step">
                         {% if transaction is defined and transaction %}
-                            <a href="{{ lang.url.checkout }}" class="btn btn-lg btn-block btn-primary">Naar afrekenen <span
-                                        class="glyphicon glyphicon-shopping-cart"></span></a>
+                            <a href="{{ lang.url.checkout }}" class="btn btn-lg btn-block btn-primary">{{ lang.shopping_cart.next_step.checkout }}
+                                <span class="glyphicon glyphicon-shopping-cart"></span></a>
                         {% else %}
-                            <a href="{{ lang.url.customer_details }}" class="btn btn-lg btn-block btn-primary customer-link">Naar klantgegevens <span
-                                        class="glyphicon glyphicon-shopping-cart"></span></a>
+                            <a href="{{ lang.url.customer_details }}" class="btn btn-lg btn-block btn-primary customer-link">{{ lang.shopping_cart.next_step.customer_data }}
+                                <span class="glyphicon glyphicon-shopping-cart"></span></a>
                         {% endif %}
                     </div>
                 </td>
@@ -151,7 +150,7 @@
                     <h3>&euro;&nbsp;<span class="shopping-bag-total">{{ shopping_cart_overview.total_price|number_format(2, '.', ',') }}</span>
                     </h3>
                     <p>
-                        <small>Inclusief verzendkosten</small>
+                        <small>{{ lang.product_details.include_shipping }}</small>
                     </p>
                 </td>
             </tr>

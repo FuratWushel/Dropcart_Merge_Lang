@@ -7,7 +7,7 @@
     <div class="col-md-2 filter-box">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h5 class="panel-title">Filter resultaten</h5>
+                <h5 class="panel-title">{{ lang.page_products.filter.results }}</h5>
             </div>
             <div class="panel-body">
                 <form action="{{ query_string }}" class="form-horizontal">
@@ -34,7 +34,7 @@
                                 <label class="checkbox-custom" id="0">
                                     <input name="show_unavailable_items" type="checkbox"
                                            value="true" {{ show_unavailable ? 'checked="checked"' : '' }}>
-                                    <span class="checkbox-label">Toon ook niet voorraadige producten</span>
+                                    <span class="checkbox-label">{{ lang.page_products.filter.not_in_stock }}</span>
                                 </label>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
 
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <button type="submit" class="btn btn-primary pull-left">Filter</button>
+                            <button type="submit" class="btn btn-primary pull-left">{{ lang.page_products.filter.name }}</button>
                         </div>
                     </div>
                 </form>
@@ -61,14 +61,14 @@
             {% endif %}
             <div class="form-group">
                 <div class="col-sm-12">
-                    <h4>Zoeken binnen categorie</h4>
+                    <h4>{{ lang.page_products.filter.search_category }}</h4>
                     <div class="search-category input-group" data-initialize="search" role="search">
                         <input id="query" name="query" class="form-control" placeholder="Naam, beschrijving, EAN of SKU"
                                type="search" value="{{ search_query ? search_query : '' }}">
                         <span class="input-group-btn">
 		        <button class="btn btn-default" type="submit">
 		          <span class="glyphicon glyphicon-search"></span>
-		          <span class="sr-only">Zoeken</span>
+		          <span class="sr-only">{{ lang.page_products.filter.search }}</span>
 		        </button>
 		        </span>
                     </div>
@@ -96,18 +96,20 @@
                         {% if product.stock %}
 
                             {% if product.stock > 10 %}
-                                <div class="label label-success">Ruimschoots op voorraad</div>
+                                <div class="label label-success">{{ lang.stock.big_stock }}</div>
                             {% else %}
-                                <div class="label label-success">Op voorraad</div>
+                                <div class="label label-success">{{ lang.stock.in_stock }}</div>
                             {% endif %}
 
                             {% if product.shipping_details.shipping_days %}
-                                <div class="label label-info">Levertijd {{ product.shipping_details.shipping_days }} werkdag(en)</div>
+                                <div class="label label-info">{{ lang.shipping.time }} {{ product.shipping_details.shipping_days }}
+                                    {{ lang.shipping.days }}
+                                </div>
                             {% else %}
-                                <div class="label label-info">Levertijd 1-3 werkdag(en)</div>
+                                <div class="label label-info">{{ lang.shipping.time_days }}</div>
                             {% endif %}
                         {% else %}
-                            <div class="label label-warning">Niet op voorraad</div>
+                            <div class="label label-warning">{{ lang.stock.out_of_stock }}</div>
                         {% endif %}
                     </div>
 
@@ -115,11 +117,11 @@
                     <div class="float-right product-details">
                         <table class="product-id-table">
                             <tr>
-                                <th>EAN</th>
+                                <th>{{ lang.product_details.ean }}</th>
                                 <td>{{ product.ean }}</td>
                             </tr>
                             <tr>
-                                <th>SKU</th>
+                                <th>{{ lang.product_details.sku }}</th>
                                 <td>{{ product.sku }}</td>
                             </tr>
                         </table>
@@ -138,11 +140,11 @@
                             {#</div>#}
                         </h3>
                         <p class="float-clear">
-                            <small><em>Inclusief verzendkosten</em></small>
+                            <small><em>{{ lang.product_details.include_shipping }}</em></small>
                         </p>
                         <div>
                             <a href="{{ lang.url.shopping_cart_add ~ product.id }}/1" class="btn btn-lg btn-block btn-primary order-link">
-                                <span class="glyphicon glyphicon-shopping-cart">Bestellen</span>
+                                <span class="glyphicon glyphicon-shopping-cart">{{ lang.product_details.order }}</span>
                             </a>
                         </div>
                     {% endif %}
@@ -154,7 +156,7 @@
 
         {% else %}
             <div class="alert alert-info">
-                Geen producten beschikbaar
+                {{ lang.product_details.no_products }}
             </div>
         {% endfor %}
     </div>
@@ -183,9 +185,9 @@
 
     <!-- PREVIOUS PAGE -->
     {% if current_page is not defined or current_page < 2 %}
-        <li class="disabled"><span>Vorige</span></li>
+        <li class="disabled"><span>{{ lang.pagination.back }}</span></li>
     {% else %}
-        <li><a href="{{ query_string ? query_string ~ '&page=' ~ current_page-1 : '?page=' ~ current_page-1 }}" rel="previous">Vorige</a></li>
+        <li><a href="{{ query_string ? query_string ~ '&page=' ~ current_page-1 : '?page=' ~ current_page-1 }}" rel="previous">{{ lang.pagination.back }}</a></li>
     {% endif %}
 
 
@@ -235,9 +237,9 @@
     {% endif %}
 
     {% if current_page < total_pages %}
-        <li><a href="{{ query_string ? query_string ~ '&page=' ~ current_page : '?page=' ~ current_page }}" rel="next">Volgende</a></li>
+        <li><a href="{{ query_string ? query_string ~ '&page=' ~ current_page : '?page=' ~ current_page }}" rel="next">{{ lang.pagination.next }}</a></li>
     {% else %}
-        <li class="disabled"><span>Volgende</span></li>
+        <li class="disabled"><span>{{ lang.pagination.next }}</span></li>
     {% endif %}
 
     </ul>

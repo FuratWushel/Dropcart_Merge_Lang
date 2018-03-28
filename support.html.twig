@@ -2,11 +2,17 @@
 
 {% block content %}
 
-    <div class="jumbotron">
-        <h1>{{ site_name }}</h1>
-        <p class="lead">
-            {{ site_slug }}
-        </p>
-    </div>
+    <h1>{{ page_title }}</h1>
+    <p class="lead">
+        {{ site_slug }}
+    </p>
+
+    <p>{{ lang.page_support.content|raw }}</p>
+
+    {{ parent() }}
+
+    {{ include("blocks/support.html.twig", [
+    'faq', faq
+    ]) }}
 
 {% endblock %}
