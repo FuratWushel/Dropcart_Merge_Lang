@@ -1,0 +1,30 @@
+{% extends "layouts/layout.html.twig" %}
+
+{% block content %}
+
+    {% if payment_status == 'paid' %}
+
+        <h1>{{ lang.page_thanks.paid_title }}</h1>
+        <p>{{ lang.page_thanks.paid_content }}</p>
+
+    {% elseif payment_status == 'pending' %}
+
+        <h1>{{ lang.page_thanks.paid_title }}</h1>
+        <p>{{ lang.age_thanks.paid_content2 }}</p>
+
+    {% else %}
+
+        <h1>Er ging iets fout</h1>
+        <h1>{{ lang.page_thanks.unpaid_title|raw }}</h1>
+
+        {{ lang.page_thanks.unpaid_content|raw }}
+
+        <form action="{{ route('order.checkout', ['locale' => loc()]) }}" method="post">
+            <p>
+                <button class="btn btn-link" type="submit">{{ lang.page_thanks.try_again }}</button>
+            </p>
+        </form>
+
+    {% endif %}
+
+{% endblock %}
